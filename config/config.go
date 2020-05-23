@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
 	"time"
 
 	prometheus_discovery_config "github.com/modularise/prometheus-discovery/discovery/config"
@@ -31,7 +32,7 @@ func LoadFile(filename string) (*PeriskopConfig, error) {
 	if err != nil {
 		return nil, err
 	}
-	cfg, err := Load(string(content))
+	cfg, err := Load(os.ExpandEnv(string(content)))
 	if err != nil {
 		return nil, fmt.Errorf("parsing YAML file %s: %v", filename, err)
 	}
